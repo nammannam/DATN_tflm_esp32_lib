@@ -28,15 +28,10 @@ struct OpDataFullyConnected {
   // be represented as a fixed point multiplier plus a left shift.
   int32_t output_multiplier;
   int output_shift;
-  
-  // Start Editor: Nam Nguyen - 22/05/2026
-  // Per-channel quantization parameters. These are only used if the filter
-  // tensor is quantized with per-channel quantization. In that case, 
-  // these arrays will have a number of elements equal to the number of output channels.
+  // Editor: Nam Nguyen - 25/05/2026
+  // Per-channel quantization parameters (when filter uses per-channel).
   int32_t* per_channel_output_multiplier;
   int32_t* per_channel_output_shift;
-
-  // End Editor: Nam Nguyen - 22/05/2026
   // The range of the fused activation layer. For example for kNone and
   // uint8_t these would be 0 and 255.
   int32_t output_activation_min;

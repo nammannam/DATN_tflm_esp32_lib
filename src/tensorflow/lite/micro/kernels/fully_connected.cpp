@@ -88,7 +88,7 @@ TfLiteStatus FullyConnectedPrepare(TfLiteContext* context, TfLiteNode* node) {
   return kTfLiteOk;
 }
 
-// Editor: Nam Nguyen - 22/05/2026
+// Editor: Nam Nguyen - 25/05/2026
 // This function evaluates the fully connected layer based on the input and filter types.
 TfLiteStatus FullyConnectedEval(TfLiteContext* context, TfLiteNode* node) {
 
@@ -159,7 +159,7 @@ TfLiteStatus FullyConnectedEval(TfLiteContext* context, TfLiteNode* node) {
             tflite::reference_integer_ops::FullyConnectedPerChannel(
                 FullyConnectedParamsQuantized(data),
                 data.per_channel_output_multiplier,
-                data.per_channel_output_shift,
+                reinterpret_cast<const int*>(data.per_channel_output_shift),  //Namng: Typecasting due to the original type of per_channel_output_shift being int32_t* while the function expects const int*.
                 tflite::micro::GetTensorShape(input),
                 tflite::micro::GetTensorData<int8_t>(input),
                 tflite::micro::GetTensorShape(filter), unpacked_filter_data,
@@ -189,7 +189,7 @@ TfLiteStatus FullyConnectedEval(TfLiteContext* context, TfLiteNode* node) {
             tflite::reference_integer_ops::FullyConnectedPerChannel(
                 FullyConnectedParamsQuantized(data),
                 data.per_channel_output_multiplier,
-                data.per_channel_output_shift,
+                reinterpret_cast<const int*>(data.per_channel_output_shift),
                 tflite::micro::GetTensorShape(input),
                 tflite::micro::GetTensorData<int8_t>(input),
                 tflite::micro::GetTensorShape(filter),
@@ -235,7 +235,7 @@ TfLiteStatus FullyConnectedEval(TfLiteContext* context, TfLiteNode* node) {
             tflite::reference_integer_ops::FullyConnectedPerChannel(
                 FullyConnectedParamsQuantized(data),
                 data.per_channel_output_multiplier,
-                data.per_channel_output_shift,
+                reinterpret_cast<const int*>(data.per_channel_output_shift),
                 tflite::micro::GetTensorShape(input),
                 tflite::micro::GetTensorData<int16_t>(input),
                 tflite::micro::GetTensorShape(filter),

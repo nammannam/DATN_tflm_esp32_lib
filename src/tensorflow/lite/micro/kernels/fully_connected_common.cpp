@@ -100,7 +100,7 @@ TfLiteStatus CalculateOpDataFullyConnected(
       data->per_channel_output_shift =
           static_cast<int32_t*>(
               context->AllocatePersistentBuffer(
-                  context, num_channels * sizeof(int32_t)));
+                context, num_channels * sizeof(int32_t)));
       TF_LITE_ENSURE(context, data->per_channel_output_multiplier != nullptr);
       TF_LITE_ENSURE(context, data->per_channel_output_shift != nullptr);
       TF_LITE_ENSURE_STATUS(
